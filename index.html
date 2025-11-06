@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Bar</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --text-color: #333;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            padding-top: 76px;
+            background-color: #f5f7fa;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 1rem;
+            transition: var(--transition);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .navbar-brand i {
+            margin-right: 8px;
+            color: var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .navbar-brand:hover {
+            transform: translateY(-2px);
+        }
+
+        .navbar-brand:hover i {
+            transform: rotate(15deg);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+            margin: 0 4px;
+            padding: 8px 16px !important;
+            border-radius: 6px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .nav-link i {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 4px 8px;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .dropdown-menu {
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+            padding-left: 20px;
+        }
+
+        .dropdown-item i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .badge {
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            margin-left: 4px;
+        }
+
+        .search-form {
+            position: relative;
+        }
+
+        .search-input {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            padding: 8px 16px 8px 40px;
+            width: 200px;
+            transition: var(--transition);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+            width: 250px;
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .user-actions .btn {
+            color: white;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            transition: var(--transition);
+        }
+
+        .user-actions .btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-section {
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section h1 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .content-section p {
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 991.98px) {
+            .search-form {
+                margin: 10px 0;
+            }
+            
+            .search-input {
+                width: 100%;
+            }
+            
+            .search-input:focus {
+                width: 100%;
+            }
+            
+            .user-actions {
+                margin-top: 10px;
+                display: flex;
+                justify-content: flex-start;
+            }
+            
+            .user-actions .btn {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+            
+            .navbar-nav {
+                padding-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-rocket"></i> TechSpace
+            </a>
+
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- Navigation Links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-compass"></i> Explore
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-th"></i> Products
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-laptop-code"></i> Web Development</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-mobile-alt"></i> Mobile Apps</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cloud"></i> Cloud Solutions</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Custom Solutions</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-users"></i> About Us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-envelope"></i> Contact
+                            <span class="badge bg-danger">New</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Search Form -->
+                <form class="search-form d-flex me-3">
+                    <button class="search-btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input class="search-input form-control" type="search" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <!-- User Actions -->
+                <div class="user-actions d-flex">
+                    <button class="btn position-relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <h1>Modern Navigation Bar</h1>
+        <h1>Denmark Amolacion</h1>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.5rem 1rem';
+                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.padding = '0.8rem 1rem';
+                navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Add animation to dropdown items
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body>
+</html>
